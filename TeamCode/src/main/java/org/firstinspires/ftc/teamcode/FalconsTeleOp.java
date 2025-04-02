@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 @TeleOp
 public class FalconsTeleOp extends LinearOpMode {
     //Initialize motors, servos, sensors, imus, etc.
-    DcMotorEx motorLF, motorRF, motorLB, motorRB;
+    DcMotorEx motorLF, motorRF, motorLB, motorRB, arm;
     // TODO: Uncomment the following line if you are using servos
     //Servo Claw;
 
@@ -25,6 +25,8 @@ public class FalconsTeleOp extends LinearOpMode {
         motorLB = (DcMotorEx) hardwareMap.dcMotor.get(DRIVE_PARAMS.leftBackDriveName);
         motorRF = (DcMotorEx) hardwareMap.dcMotor.get(DRIVE_PARAMS.rightFrontDriveName);
         motorRB = (DcMotorEx) hardwareMap.dcMotor.get(DRIVE_PARAMS.rightBackDriveName);
+
+        arm = (DcMotorEx) hardwareMap.dcMotor.get("arm");
 
         // Use the following line as a template for defining new servos
         //Claw = (Servo) hardwareMap.servo.get("claw");
@@ -95,6 +97,14 @@ public class FalconsTeleOp extends LinearOpMode {
             motorLB.setPower(powerLB);
             motorRF.setPower(powerRF);
             motorRB.setPower(powerRB);
+
+            if (gamepad1.right_trigger >0){
+                arm.setPower(gamepad1.right_trigger);
+            } else if (gamepad1.left_trigger >0){
+                arm.setPower(gamepad1.left_trigger*-1);
+            } else {
+                arm.setPower(0);
+            }
 
 
 
